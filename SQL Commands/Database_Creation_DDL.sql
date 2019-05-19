@@ -143,6 +143,7 @@ CREATE TABLE cq.Store_Flavor(
 	Store_FlavorId INT NOT NULL IDENTITY,
 	StoreId INT NOT NULL,
 	FlavorId INT NOT NULL,
+	Bonus INT NOT NULL, 
 	CONSTRAINT PK_Store_Flavor PRIMARY KEY(Store_FlavorId),
 	CONSTRAINT FK_Store_Flavor FOREIGN KEY(StoreId) REFERENCES cq.Store(StoreId),
 	CONSTRAINT FK_Flavor_Store FOREIGN KEY(FlavorId) REFERENCES cq.Flavor(FlavorId)
