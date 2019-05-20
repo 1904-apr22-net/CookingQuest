@@ -45,8 +45,11 @@ Values
 INSERT INTO cq.Flavor
 (Name,Description)
 Values
-('Sweet','Sweet to the Taste'),
-('Salty','Salty');
+('Sweet','Sweet to the taste. Good for desserts and candies.'),
+('Salty','Good old sodium. Used well with meat dishes.'),
+('Sour','Mouth-puckering goodness. Citrus fruits and vinegar'),
+('Bitter', 'When your tongue needs a challenge. Coffee, olives and the like'),
+('Unami', 'The ultimate in savory. Key for meat dishes.');
 
 INSERT INTO cq.Store
 (Name,Description)
