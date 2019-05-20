@@ -67,8 +67,12 @@ Values
 INSERT INTO cq.Store
 (Name,Description)
 Values
-('Walmart','They are cheap, but they always buy'),
-('Blackmarket','Darkest and the Dankest');
+('Walmarket','The Market of Commoners. They''ll take anything.'),
+('Blackmarket','The Market of Thieves. Fond of spices.'),
+('Highmarket','The Market of Kings. Nobility craves delicate, sweet things.'),
+('Bookmarket','The Market of Mages. Bitter food improves their magic.'),
+('Faemarket','The Market of Pixies. Sour amuses them.'),
+('Bloodmarket','The Market of Hunters. Only umani can satisfy them.');
 
 INSERT INTO cq.Player_Equipment
 (PlayerId,EquipmentId)
@@ -146,4 +150,32 @@ INSERT INTO cq.Store_Flavor
 (StoreId, FlavorId, Bonus)
 Values
 (1,1,2),
-(2,2,2);
+(1,2,2),
+(1,3,2),
+(1,4,2),
+(1,5,2),
+(2,1,2),
+(2,2,4),
+(2,3,2),
+(2,4,2),
+(2,5,3),
+(3,1,4),
+(3,2,1),
+(3,3,2),
+(3,4,2),
+(3,5,2),
+(4,1,2),
+(4,2,2),
+(4,3,2),
+(4,4,4),
+(4,5,2),
+(5,1,2),
+(5,2,2),
+(5,3,4),
+(5,4,2),
+(5,5,2),
+(6,1,2),
+(6,2,2),
+(6,3,2),
+(6,4,2),
+(6,5,4);
