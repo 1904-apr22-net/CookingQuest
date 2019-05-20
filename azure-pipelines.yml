@@ -14,7 +14,13 @@ variables:
   solutionPath: 'CookingQuest'
   
 steps:
-
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'Szsaunders-Github'
+    organization: 'szsaunders-github'
+    scannerMode: 'MSBuild'
+    projectKey: 'CookingQuest'
+    projectName: 'CookingQuest'
 
 - script: dotnet build --configuration $(buildConfiguration)
   workingDirectory: $(solutionPath)
