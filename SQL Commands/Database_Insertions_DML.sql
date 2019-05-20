@@ -24,8 +24,10 @@ Values
 INSERT INTO cq.Location
 (Name,Difficulty,Description)
 Values
-('Brinewater Grotto', 1, 'Avoid the Frostbite Spiders'),
-('Ravenscar Hollow', 2, 'Home of the mighty Cave Trolls');
+('Brinewater Grotto', 1, 'Avoid the Frostbite Spiders. Bitter foods common here.'),
+('Ravenscar Hollow', 2, 'Home of the mighty Cave Trolls. Known for its cave salt.'),
+('Bearzone', 4, 'Endless bear vortex. High number of unami drops.'),
+('Flavortown', 5, 'Home of the Flavor Gods. All flavors common here.');
 
 INSERT INTO cq.Loot
 (Name,Price,Description)
@@ -47,7 +49,7 @@ INSERT INTO cq.Flavor
 Values
 ('Sweet','Sweet to the taste. Good for desserts and candies.'),
 ('Salty','Good old sodium. Used well with meat dishes.'),
-('Sour','Mouth-puckering goodness. Citrus fruits and vinegar'),
+('Sour','Mouth-puckering goodness. Mostly fruits, but also vinegar.'),
 ('Bitter', 'When your tongue needs a challenge. Coffee, olives and the like'),
 ('Unami', 'The ultimate in savory. Key for meat dishes.');
 
