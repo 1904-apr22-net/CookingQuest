@@ -150,3 +150,5 @@ CREATE TABLE cq.Store_Flavor(
 );
 
 
+ALTER TABLE cq.Account
+  ADD IsAdmin bit NOT NULL default 0
