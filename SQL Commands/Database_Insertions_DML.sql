@@ -33,10 +33,21 @@ INSERT INTO cq.Loot
 (Name,Price,Description)
 Values
 ('Apple',1,'A Simple Apple'),
-('Orange',2,'Unleash the Power'),
-('Cranberries',5,'Needs Sugar'),
-('Blueberry',10,'Zesty and Fun'),
-('Salt',50,'Makes everything better');
+('Blueberries',10,'Zesty and Fun'),
+('Sugarcane', 50, 'Chewy & Sweet'),
+('Bell Pepper', 1, 'Mildly spicy'),
+('Japaleño Pepper', 10, 'Pretty spicy'),
+('Habanero Pepper', 50, 'Flaming breath levels of spicy'),
+('Rock salt',50,'An honest day''s wages.'),
+('Orange',1,'Citrus Blast'),
+('Cranberries',10,'More Sour Than Sweet'),
+('Pickle',50, 'A Cucumber, Irrevocably Tainted'),
+('Coffee Beans',1,'Who Needs Sleep?'),
+('Kale',10,'Gotta Get Healthy.'),
+('Arugula',50, 'Twice As Healthy As Kale, & Twice As Bitter.'),
+('Mushrooms',1,'The Fungus Among Us'),
+('Dried Meat',10,'Portable, If Not Delicious.'),
+('Steak',50, 'Worth Killing a Cow Over.');
 
 INSERT INTO cq.Recipe
 (Name,Description)
@@ -48,7 +59,7 @@ INSERT INTO cq.Flavor
 (Name,Description)
 Values
 ('Sweet','Sweet to the taste. Good for desserts and candies.'),
-('Salty','Good old sodium. Used well with meat dishes.'),
+('Spicy','The hotter the better. Best found in peppers.'),
 ('Sour','Mouth-puckering goodness. Mostly fruits, but also vinegar.'),
 ('Bitter', 'When your tongue needs a challenge. Coffee, olives and the like'),
 ('Unami', 'The ultimate in savory. Key for meat dishes.');
@@ -117,8 +128,19 @@ Values
 (1,1),
 (1,2),
 (1,3),
-(1,4),
-(2,5);
+(2,4),
+(2,5),
+(2,6),
+(3,7),
+(3,8),
+(3,9),
+(4,10),
+(4,11),
+(4,12),
+(5,13),
+(5,14),
+(5,15)
+;
 
 INSERT INTO cq.Store_Flavor
 (StoreId, FlavorId, Bonus)
