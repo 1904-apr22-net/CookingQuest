@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CookingQuest.Web.Models;
+using CookingQuest.Library.Models.Library;
 
 namespace CookingQuest.Web.Controllers
 {
