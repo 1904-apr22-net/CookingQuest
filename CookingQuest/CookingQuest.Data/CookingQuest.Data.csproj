@@ -14,4 +14,12 @@
     <PackageReference Include="NLog.Config" Version="4.6.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CookingQuest.Library\CookingQuest.Library.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repository\" />
+  </ItemGroup>
+
 </Project>
