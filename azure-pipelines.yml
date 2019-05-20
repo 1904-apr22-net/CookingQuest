@@ -14,13 +14,13 @@ variables:
   solutionPath: 'CookingQuest'
   
 steps:
-- task: SonarCloudPrepare@1
-  inputs:
-    SonarCloud: 'Szsaunders-Github'
-    organization: 'szsaunders-github'
-    scannerMode: 'MSBuild'
-    projectKey: 'CookingQuest'
-    projectName: 'CookingQuest'
+# - task: SonarCloudPrepare@1
+#   inputs:
+#     SonarCloud: 'Szsaunders-Github'
+#     organization: 'szsaunders-github'
+#     scannerMode: 'MSBuild'
+#     projectKey: 'CookingQuest'
+#     projectName: 'CookingQuest'
 
 - script: dotnet build --configuration $(buildConfiguration)
   workingDirectory: $(solutionPath)
@@ -35,9 +35,9 @@ steps:
   workingDirectory: $(solutionPath)
   displayName: 'dotnet test $(buildConfiguration)'
 
-- task: SonarCloudAnalyze@1
-  inputs: {}
+# - task: SonarCloudAnalyze@1
+#   inputs: {}
 
-- task: SonarCloudPublish@1
-  inputs:
-    pollingTimeoutSec: '60'
+# - task: SonarCloudPublish@1
+#   inputs:
+#     pollingTimeoutSec: '60'
