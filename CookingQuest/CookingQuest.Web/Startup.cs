@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CookingQuest.Data.Entities;
+using CookingQuest.Data.Repository;
+using CookingQuest.Library.IRepository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,6 +28,9 @@ namespace CookingQuest.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<CookingQuestContext>(options =>
+                   options.UseSqlServer(Configuration.GetConnectionString("CookingQuest")));
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -33,6 +40,15 @@ namespace CookingQuest.Web
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddScoped<IAccountRepo, AccountRepo>();
+            services.AddScoped<IEquipmentRepo,EquipmentRepo>();
+            services.AddScoped<IFlavorRepo, FlavorRepo>();
+            services.AddScoped<ILocationRepo, LocationRepo>();
+            services.AddScoped<ILootRepo, LootRepo>();
+            services.AddScoped<IPlayerRepo, PlayerRepo>();
+            services.AddScoped<IRecipeRepo, RecipeRepo>();
+            services.AddScoped<IStoreRepo, StoreRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
