@@ -1,5 +1,6 @@
 ﻿using CookingQuest.Data.Entities;
 using CookingQuest.Library.IRepository;
+using CookingQuest.Library.Models.Library;
 using NLog;
 using System;
 using System.Collections.Generic;
