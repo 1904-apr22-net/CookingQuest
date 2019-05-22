@@ -32,7 +32,6 @@ namespace CookingQuest.Data.Entities
         public virtual DbSet<StoreEquipment> StoreEquipment { get; set; }
         public virtual DbSet<StoreFlavor> StoreFlavor { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
@@ -260,6 +259,8 @@ namespace CookingQuest.Data.Entities
                 entity.Property(e => e.Description)
                     .IsRequired()
                     .HasMaxLength(200);
+
+                entity.Property(e => e.Difficulty).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
