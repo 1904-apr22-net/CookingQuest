@@ -5,6 +5,7 @@ using NLog;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace CookingQuest.Data.Repository
 {
@@ -16,12 +17,73 @@ namespace CookingQuest.Data.Repository
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
 
 
+        public IEnumerable<LocationModel> GetAll()
+        {
+            return Mapper.Map(_dbContext.Location);
+        }
 
+        public LocationModel Get(int id)
+        {
+            return Mapper.Map(_dbContext.Location.FirstOrDefault(x => x.LocationId == id));
+        }
+
+       
+
+        public int Create(LocationModel location, bool ignoreId = true)
+        {
+            if (location is null)
+            {
+                throw new ArgumentNullException(nameof(location));
+            }
+            if (!location.Validate())
+            {
+                throw new ArgumentException("Location Invalid", nameof(location));
+            }
+            if (ignoreId)
+            {
+                location.LocationId = (_dbContext.Location.Count() == 0) ? 1 : (_dbContext.Location.Max(x => x.LocationId) + 1);
+            }
+            _dbContext.Location.Add(Mapper.Map(location));
+            return location.LocationId;
+        }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        public bool Update(LocationModel location)
+        {
+            if (!location.Validate() && location.LocationId != 0)
+            {
+                throw new ArgumentException("Location Invalid", nameof(location));
+            }
+            var deleted = Delete(location.LocationId);
+
+            if (!deleted)
+            {
+                return false;
+            }
+
+            Create(location, ignoreId: false);
+
+            return true;
+        }
+
+        public bool Delete(int id)
+        {
+            if (Get(id) is LocationModel location)
+            {
+                _dbContext.Location.Remove(_dbContext.Location.First(x => x.LocationId == location.LocationId));
+                return true;
+            }
+            return false;
+        }
         public void Save()
         {
             _dbContext.SaveChanges();
         }
-
 
         private bool disposedValue = false; // To detect redundant calls
 
@@ -37,12 +99,5 @@ namespace CookingQuest.Data.Repository
                 disposedValue = true;
             }
         }
-
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            Dispose(true);
-        }
-
     }
 }
