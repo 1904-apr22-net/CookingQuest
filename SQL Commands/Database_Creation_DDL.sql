@@ -117,7 +117,8 @@ CREATE TABLE cq.Location_Loot(
 	LootId INT NOT NULL,
 	DropRate INT NOT NULL,
 	CONSTRAINT PK_Location_Loot PRIMARY KEY(Location_LootId),
-	CONSTRAINT FK_Location_Loot FOREIGN KEY(LocationId) REFERENCES cq.Location(LocationId),
+	CONSTRAINT FK
+	Location_Loot FOREIGN KEY(LocationId) REFERENCES cq.Location(LocationId),
 	CONSTRAINT FK_Loot_Location FOREIGN KEY(LootId) REFERENCES cq.Loot(LootId)
 );
 
@@ -152,3 +153,6 @@ CREATE TABLE cq.Store_Flavor(
 
 ALTER TABLE cq.Account
   ADD IsAdmin bit NOT NULL default 0
+  
+ALTER TABLE cq.Store
+	ADD Difficulty INT NOT NULL CHECK (Difficulty >= 1 AND Difficulty <= 9) default 1
