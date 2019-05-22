@@ -19,12 +19,31 @@ namespace CookingQuest.Data.Repository
 
         public IEnumerable<LocationModel> GetAll()
         {
-            return Mapper.Map(_dbContext.Location);
+            try
+            {
+                return Mapper.Map(_dbContext.Location);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.ToString());
+                return null;
+            }
         }
 
         public LocationModel Get(int id)
         {
-            return Mapper.Map(_dbContext.Location.FirstOrDefault(x => x.LocationId == id));
+            Location l;
+            try
+            {
+                l = _dbContext.Location.FirstOrDefault(x => x.LocationId == id);
+                return Mapper.Map(l);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.ToString());
+                return null;
+            }
+            
         }
 
        
