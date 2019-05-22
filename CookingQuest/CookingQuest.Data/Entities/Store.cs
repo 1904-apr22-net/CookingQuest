@@ -14,6 +14,7 @@ namespace CookingQuest.Data.Entities
         public int StoreId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public int Difficulty { get; set; }
 
         public virtual ICollection<StoreEquipment> StoreEquipment { get; set; }
         public virtual ICollection<StoreFlavor> StoreFlavor { get; set; }

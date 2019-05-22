@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookingQuest.Web", "CookingQuest.Web\CookingQuest.Web.csproj", "{E01678EB-0C45-4C2A-8F49-93F30A02B9EE}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookingQuest.Data", "CookingQuest.Data\CookingQuest.Data.csproj", "{4F753015-C466-46E2-B1F6-7F8776CB62EC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookingQuest.Tests", "CookingQuest.Tests\CookingQuest.Tests.csproj", "{5590E915-B77B-4993-BF55-275EAE3BE89D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookingQuest.Library", "CookingQuest.Library\CookingQuest.Library.csproj", "{B3BC046C-09AB-4029-977D-55A72759741F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookingQuest.Library", "CookingQuest.Library\CookingQuest.Library.csproj", "{B3BC046C-09AB-4029-977D-55A72759741F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookingQuest.API", "CookingQuest.API\CookingQuest.API.csproj", "{EE086088-8A3A-4DCB-9D0C-8C2A655A6412}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E01678EB-0C45-4C2A-8F49-93F30A02B9EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E01678EB-0C45-4C2A-8F49-93F30A02B9EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E01678EB-0C45-4C2A-8F49-93F30A02B9EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E01678EB-0C45-4C2A-8F49-93F30A02B9EE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4F753015-C466-46E2-B1F6-7F8776CB62EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4F753015-C466-46E2-B1F6-7F8776CB62EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F753015-C466-46E2-B1F6-7F8776CB62EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{B3BC046C-09AB-4029-977D-55A72759741F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3BC046C-09AB-4029-977D-55A72759741F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3BC046C-09AB-4029-977D-55A72759741F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE086088-8A3A-4DCB-9D0C-8C2A655A6412}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE086088-8A3A-4DCB-9D0C-8C2A655A6412}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE086088-8A3A-4DCB-9D0C-8C2A655A6412}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE086088-8A3A-4DCB-9D0C-8C2A655A6412}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

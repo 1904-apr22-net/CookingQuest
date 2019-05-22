@@ -152,3 +152,6 @@ CREATE TABLE cq.Store_Flavor(
 
 ALTER TABLE cq.Account
   ADD IsAdmin bit NOT NULL default 0
+  
+ALTER TABLE cq.Store
+  ADD Difficulty INT NOT NULL CHECK (Difficulty >= 1 AND Difficulty <= 9) default 1
