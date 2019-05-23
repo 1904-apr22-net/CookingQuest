@@ -17,7 +17,7 @@ namespace CookingQuest.API.Controllers
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
         // GET api/Location
 
-        public ILocationRepo _repo;
+        private ILocationRepo _repo;
 
         public LocationController(ILocationRepo repo) => _repo = repo ?? throw new ArgumentNullException(nameof(repo));
         [HttpGet]
