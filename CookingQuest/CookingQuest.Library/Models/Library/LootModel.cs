@@ -12,5 +12,6 @@ namespace CookingQuest.Library.Models.Library
         public string Description { get; set; }
 
         public int Quantity { get; set; } = 0;
+        public int DropRate { get; set; } = 0;
     }
 }
