@@ -8,9 +8,14 @@ namespace CookingQuest.Library.IRepository
 {
     public interface IPlayerRepo : IDisposable
     {
-        IEnumerable<PlayerModel> GetAllPlayers();
+        Task<IEnumerable<PlayerModel>> GetAllPlayers();
         Task<PlayerModel> GetPlayerById(int PlayerId);
-
+        Task<IEnumerable<EquipmentModel>> GetPlayerEquipment(int PlayerId);
+        Task<IEnumerable<LocationModel>> GetUnlockedLocations(int PlayerId);
+        Task<IEnumerable<LootModel>> GetLoot(int PlayerId);
+        Task<int> AddPlayer(string name);
+        Task<bool> EditPlayer(PlayerModel player);
+        Task<bool> DeletePlayer(int PlayerId);
         void Save();
     }
 }
