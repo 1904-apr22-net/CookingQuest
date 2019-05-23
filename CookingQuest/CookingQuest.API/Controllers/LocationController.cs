@@ -83,13 +83,15 @@ namespace CookingQuest.API.Controllers
             try
             {
                 id = await _repo.Create(location);
+                _logger.Info($"Adding new location at {id}");
+                // there's also CreatedAtAction, same purpose
+                return CreatedAtRoute("Get", new { Id = id }, Get(id)); // 201 Created
             }
             catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
             }
-            // there's also CreatedAtAction, same purpose
-            return CreatedAtRoute("Get", new { Id = id }, Get(id)); // 201 Created
+          
         }
 
         // PUT api/Location/5
@@ -113,6 +115,7 @@ namespace CookingQuest.API.Controllers
             {
                 return BadRequest(ex.Message); // 400 Bad Request
             }
+            _logger.Info($"Updated location at {id}");
             return NoContent(); // 204 No Content
         }
 
@@ -121,6 +124,7 @@ namespace CookingQuest.API.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var success = await _repo.DeleteAsync(id);
+            _logger.Info($"Deleting location at {id}");
             if (!success)
             {
                 return NotFound(); // 404 Not Found
