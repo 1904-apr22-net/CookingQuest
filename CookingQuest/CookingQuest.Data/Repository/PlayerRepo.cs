@@ -4,7 +4,9 @@ using CookingQuest.Library.Models.Library;
 using NLog;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CookingQuest.Data.Repository
 {
@@ -15,7 +17,34 @@ namespace CookingQuest.Data.Repository
         public PlayerRepo(CookingQuestContext dbContext) =>
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
 
+        public IEnumerable<PlayerModel> GetAllPlayers()
+        {
+            try
+            {
+                return Mapper.Map(_dbContext.Player);
+            }
 
+            catch (Exception ex)
+            {
+                _logger.Error(ex.ToString());
+                return null;
+            }
+        }
+
+        public async Task<PlayerModel> GetPlayerById(int PlayerId)
+        {
+            try
+            {
+                var player = await _dbContext.Player.FindAsync(PlayerId);
+                return Mapper.Map(player);
+            }
+
+            catch (Exception ex)
+            {
+                _logger.Error(ex.ToString());
+                return null;
+            }
+        }
 
         public void Save()
         {
