@@ -47,7 +47,35 @@ namespace CookingQuest.Data.Repository
             
         }
 
-       
+        public async Task<IEnumerable<LootModel>> GetLocationLoot(int id) {
+            try
+            {
+                var location_loot = await Task.FromResult(Mapper.Map(_dbContext.LocationLoot.Where(x => x.LocationId == id)));
+                var loot = Mapper.Map(await Task.FromResult(_dbContext.Loot));
+
+                var items = new List<LootModel>();
+
+                foreach (var l in loot)
+                {
+                    foreach (var pl in location_loot)
+                    {
+                        if (pl.LootId == l.LootId)
+                        {
+                            l.DropRate = pl.DropRate;
+                            items.Add(l);
+                        }
+                    }
+                }
+                return items;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.ToString());
+                return null;
+            }
+        }
+            
+
 
         public async Task<int> Create(LocationModel location, bool ignoreId = true)
         {

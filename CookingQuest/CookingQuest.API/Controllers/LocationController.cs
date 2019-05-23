@@ -6,6 +6,7 @@ using CookingQuest.Data.Repository;
 using CookingQuest.Library.IRepository;
 using CookingQuest.Library.Models.Library;
 using Microsoft.AspNetCore.Mvc;
+using NLog;
 
 namespace CookingQuest.API.Controllers
 {
@@ -13,16 +14,28 @@ namespace CookingQuest.API.Controllers
     [ApiController]
     public class LocationController : ControllerBase
     {
-        // GET api/values
+        private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
+        // GET api/Location
 
         public ILocationRepo _repo;
 
         public LocationController(ILocationRepo repo) => _repo = repo ?? throw new ArgumentNullException(nameof(repo));
         [HttpGet]
-        public async Task<IEnumerable<LocationModel>> Get() => await _repo.GetAll();
+        public async Task<ActionResult<IEnumerable<LocationModel>>> Get()
+        {
+            var locations =  await _repo.GetAll();
+            if (locations == null)
+            {
+                return NotFound();
+            }
+            _logger.Info($"Returning {locations.Count()} locations");
+            return Ok(locations);
+ 
+
+        }
 
 
-        // GET api/values/5
+        // GET api/Location/5
         [HttpGet("{id}")]
         public async Task<ActionResult<LocationModel>> Get(int id)
         {
@@ -31,7 +44,8 @@ namespace CookingQuest.API.Controllers
 
                 if (await _repo.Get(id) is LocationModel location)
                 {
-                    return location; // 200 OK
+                    _logger.Info($"Returning location {location.LocationId} ");
+                    return Ok(location); // 200 OK
                 }
                 else
                 {
@@ -45,9 +59,22 @@ namespace CookingQuest.API.Controllers
             }
         }
 
+        // GET: api/Location/Loot/{PlayerId}
+        [HttpGet("[action]/{id}")]
+        public async Task<ActionResult<IEnumerable<LootModel>>> Loot(int id)
+        {
+            var loot = await _repo.GetLocationLoot(id);
 
-    // POST api/values
-    [HttpPost]
+            if (loot == null)
+            {
+                return NotFound();
+            }
+            _logger.Info($"Returning {loot.Count()} for location {id}");
+            return Ok(loot);
+        }
+
+        // POST api/Location
+        [HttpPost]
         public async Task<IActionResult> Post([FromBody] LocationModel location)
         {
            
@@ -65,7 +92,7 @@ namespace CookingQuest.API.Controllers
             return CreatedAtRoute("Get", new { Id = id }, Get(id)); // 201 Created
         }
 
-        // PUT api/values/5
+        // PUT api/Location/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] LocationModel location)
         {
@@ -89,7 +116,7 @@ namespace CookingQuest.API.Controllers
             return NoContent(); // 204 No Content
         }
 
-        // DELETE api/values/5
+        // DELETE api/Location/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
