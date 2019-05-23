@@ -18,5 +18,15 @@ namespace CookingQuest.Data.Entities
 
         public virtual ICollection<StoreEquipment> StoreEquipment { get; set; }
         public virtual ICollection<StoreFlavor> StoreFlavor { get; set; }
+
+        internal bool Validate()
+        {
+            throw new NotImplementedException();
+        }
+
+        public static implicit operator Store(CookingQuestContext v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
