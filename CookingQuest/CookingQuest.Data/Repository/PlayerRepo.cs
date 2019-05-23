@@ -176,7 +176,8 @@ namespace CookingQuest.Data.Repository
             {
                 Player CurrentPlayer = await _dbContext.Player.FindAsync(PlayerId);
 
-                if(await Task.FromResult(_dbContext.Account.FirstOrDefault(x => x.PlayerId == PlayerId)) != null){
+                if(await Task.FromResult(_dbContext.Account.FirstOrDefault(x => x.PlayerId == PlayerId)) != null)
+                {
                     throw new ArgumentException();
                 }
 

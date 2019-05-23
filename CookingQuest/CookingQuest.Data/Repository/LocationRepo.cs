@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CookingQuest.Data.Repository
 {
@@ -17,11 +18,11 @@ namespace CookingQuest.Data.Repository
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
 
 
-        public IEnumerable<LocationModel> GetAll()
+        public async Task<IEnumerable<LocationModel>> GetAll()
         {
             try
             {
-                return Mapper.Map(_dbContext.Location);
+                return await Task.FromResult(Mapper.Map(_dbContext.Location));
             }
             catch (Exception ex)
             {
@@ -30,13 +31,13 @@ namespace CookingQuest.Data.Repository
             }
         }
 
-        public LocationModel Get(int id)
+        public async Task<LocationModel> Get(int id)
         {
             Location l;
             try
             {
                 l = _dbContext.Location.FirstOrDefault(x => x.LocationId == id);
-                return Mapper.Map(l);
+                return await Task.FromResult(Mapper.Map(l));
             }
             catch (Exception ex)
             {
@@ -48,7 +49,7 @@ namespace CookingQuest.Data.Repository
 
        
 
-        public int Create(LocationModel location, bool ignoreId = true)
+        public async Task<int> Create(LocationModel location, bool ignoreId = true)
         {
             if (location is null)
             {
@@ -62,49 +63,84 @@ namespace CookingQuest.Data.Repository
             {
                 location.LocationId = (_dbContext.Location.Count() == 0) ? 1 : (_dbContext.Location.Max(x => x.LocationId) + 1);
             }
-            _dbContext.Location.Add(Mapper.Map(location));
-            return location.LocationId;
+            try
+            {
+                _dbContext.Location.Add(Mapper.Map(location));
+                Save();
+                return await Task.FromResult(location.LocationId);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.ToString());
+                return 0;
+            }
         }
 
         // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            Dispose(true);
-        }
+       
 
-        public bool Update(LocationModel location)
+        public async Task<bool> Update(LocationModel location)
         {
             if (!location.Validate() && location.LocationId != 0)
             {
                 throw new ArgumentException("Location Invalid", nameof(location));
             }
-            var deleted = Delete(location.LocationId);
-
-            if (!deleted)
+            try
             {
-                return false;
-            }
-
-            Create(location, ignoreId: false);
-
-            return true;
-        }
-
-        public bool Delete(int id)
-        {
-            if (Get(id) is LocationModel location)
-            {
-                _dbContext.Location.Remove(_dbContext.Location.First(x => x.LocationId == location.LocationId));
+                var deleted = await DeleteAsync(location.LocationId);
+                if (!deleted)
+                {
+                    return false;
+                }
+                await Create(location, ignoreId: false);
+                Save();
                 return true;
             }
-            return false;
+            catch (Exception ex)
+            {
+                _logger.Error(ex.ToString());
+                return false;
+            }
+           
         }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            try
+            {
+                Location deletedlocation = await _dbContext.Location.FindAsync(id);
+
+                //if (Get(id) is LocationModel location)
+                if (deletedlocation == null)
+                {
+                    throw new ArgumentException();
+                }
+                else
+                {
+                    _dbContext.Location.Remove(deletedlocation);
+                    Save();
+                    return true;
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.ToString());
+                return false;
+            }
+        }
+
         public void Save()
         {
             _dbContext.SaveChanges();
         }
 
         private bool disposedValue = false; // To detect redundant calls
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
 
         protected virtual void Dispose(bool disposing)
         {

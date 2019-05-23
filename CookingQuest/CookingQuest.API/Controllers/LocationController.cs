@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CookingQuest.Data.Repository;
+using CookingQuest.Library.IRepository;
 using CookingQuest.Library.Models.Library;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,34 +15,47 @@ namespace CookingQuest.API.Controllers
     {
         // GET api/values
 
-        private readonly LocationRepo _repo;
+        public ILocationRepo _repo;
 
-        public LocationController(LocationRepo repo) => _repo = repo ?? throw new ArgumentNullException(nameof(repo));
+        public LocationController(ILocationRepo repo) => _repo = repo ?? throw new ArgumentNullException(nameof(repo));
         [HttpGet]
-        public IEnumerable<LocationModel> Get() =>  _repo.GetAll();
-        
+        public async Task<IEnumerable<LocationModel>> Get() => await _repo.GetAll();
+
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<LocationModel> Get(int id)
+        public async Task<ActionResult<LocationModel>> Get(int id)
         {
-            if (_repo.Get(id) is LocationModel location)
+            try
             {
-                return location; // 200 OK
+
+                if (await _repo.Get(id) is LocationModel location)
+                {
+                    return location; // 200 OK
+                }
+                else
+                {
+                    return NotFound(); // 404 Not Found
+                }
             }
-            return NotFound(); // 404 Not Found
+
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        // POST api/values
-        [HttpPost]
-        public IActionResult Post([FromBody] LocationModel location)
+
+    // POST api/values
+    [HttpPost]
+        public async Task<IActionResult> Post([FromBody] LocationModel location)
         {
            
 
             int id;
             try
             {
-                id = _repo.Create(location);
+                id = await _repo.Create(location);
             }
             catch (ArgumentException ex)
             {
@@ -53,7 +67,7 @@ namespace CookingQuest.API.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] LocationModel location)
+        public async Task<IActionResult> Put(int id, [FromBody] LocationModel location)
         {
             if (Get(id) is null)
             {
@@ -62,7 +76,7 @@ namespace CookingQuest.API.Controllers
             location.LocationId = id;
             try
             {
-                var success = _repo.Update(location);
+                var success = await _repo.Update(location);
                 if (!success)
                 {
                     return BadRequest("invalid request"); // 400 Bad Request
@@ -77,9 +91,9 @@ namespace CookingQuest.API.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var success = _repo.Delete(id);
+            var success = await _repo.DeleteAsync(id);
             if (!success)
             {
                 return NotFound(); // 404 Not Found
