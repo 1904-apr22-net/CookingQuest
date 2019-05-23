@@ -7,5 +7,7 @@ namespace CookingQuest.Library.IRepository
     public interface IStoreRepo : IDisposable
     {
         void Save();
+
+
     }
 }
