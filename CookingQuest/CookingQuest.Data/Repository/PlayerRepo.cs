@@ -45,6 +45,26 @@ namespace CookingQuest.Data.Repository
                 return null;
             }
         }
+        public async Task<PlayerModel> GetPlayerByEmail(string email)
+        {
+            try
+            {
+                Account account = await Task.FromResult(_dbContext.Account.Where(a => a.Username == email).FirstOrDefault());
+                if(account == null)
+                {
+                    throw new ArgumentException();
+                }
+
+                var player = await _dbContext.Player.FindAsync(account.PlayerId);
+                return Mapper.Map(player);
+            }
+
+            catch (Exception ex)
+            {
+                _logger.Error(ex.ToString());
+                return null;
+            }
+        }
         public async Task<IEnumerable<EquipmentModel>> GetPlayerEquipment(int PlayerId)
         {
             try

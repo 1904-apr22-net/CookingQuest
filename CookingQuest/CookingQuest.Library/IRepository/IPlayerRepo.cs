@@ -10,6 +10,7 @@ namespace CookingQuest.Library.IRepository
     {
         Task<IEnumerable<PlayerModel>> GetAllPlayers();
         Task<PlayerModel> GetPlayerById(int PlayerId);
+        Task<PlayerModel> GetPlayerByEmail(string email);
         Task<IEnumerable<EquipmentModel>> GetPlayerEquipment(int PlayerId);
         Task<IEnumerable<LocationModel>> GetUnlockedLocations(int PlayerId);
         Task<IEnumerable<LootModel>> GetLoot(int PlayerId);

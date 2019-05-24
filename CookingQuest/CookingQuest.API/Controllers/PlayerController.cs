@@ -52,6 +52,20 @@ namespace CookingQuest.API.Controllers
             return NotFound();
         }
 
+        // GET: api/Player/{Email}
+        [HttpGet("[action]/{email}")]
+        public async Task<ActionResult<PlayerModel>> Account(string email)
+        {
+            var player = await PlayerRepo.GetPlayerByEmail(email);
+
+            if (player == null)
+            {
+                return NotFound();
+            }
+            _logger.Info($"Returning {player.PlayerId}");
+            return Ok(player);
+        }
+
         // GET: api/Player/Equipment/{PlayerId}
         [HttpGet("[action]/{id}")]
         public async Task<ActionResult<IEnumerable<PlayerModel>>> Equipment(int id)
