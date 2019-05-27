@@ -140,18 +140,18 @@ namespace CookingQuest.Tests
             Assert.IsAssignableFrom(model.GetType(), model3);
         }
         [Fact]
-        public void StoreFlavor()
+        public void StoreFlavorModel()
         {
-            var model = new StoreFlavor();
+            var model = new StoreFlavorModel();
             var model2 = Mapper.Map(model);
             var model3 = Mapper.Map(model2);
 
             Assert.IsAssignableFrom(model.GetType(), model3);
         }
         [Fact]
-        public void Store()
+        public void StoreModel()
         {
-            var model = new Store();
+            var model = new StoreModel();
             var model2 = Mapper.Map(model);
             var model3 = Mapper.Map(model2);
 
@@ -159,6 +159,182 @@ namespace CookingQuest.Tests
         }
 
 
+        [Fact]
+        public void Account()
+        {
+            IEnumerable<Account> model = new List<Account>();
+            var model2 = Mapper.Map(model);
+            var model3 = Mapper.Map(model2);
+            var model4 = Mapper.Map(model3);
+            var model5 = Mapper.Map(model4);
 
+            Assert.IsType(model3.GetType(), model5);
+        }
+
+        [Fact]
+        public void FlavorLoot()
+        {
+            IEnumerable<FlavorLoot> model = new List<FlavorLoot>();
+            var model2 = Mapper.Map(model);
+            var model3 = Mapper.Map(model2);
+            var model4 = Mapper.Map(model3);
+            var model5 = Mapper.Map(model4);
+
+            Assert.IsType(model3.GetType(), model5);
+        }
+        [Fact]
+        public void Equipment()
+        {
+            IEnumerable<Equipment> model = new List<Equipment>();
+            var model2 = Mapper.Map(model);
+            var model3 = Mapper.Map(model2);
+            var model4 = Mapper.Map(model3);
+            var model5 = Mapper.Map(model4);
+
+            Assert.IsType(model3.GetType(), model5);
+        }
+        [Fact]
+        public void Flavor()
+        {
+            IEnumerable<Flavor> model = new List<Flavor>();
+            var model2 = Mapper.Map(model);
+            var model3 = Mapper.Map(model2);
+            var model4 = Mapper.Map(model3);
+            var model5 = Mapper.Map(model4);
+
+            Assert.IsType(model3.GetType(), model5);
+        }
+        [Fact]
+        public void LocationLoot()
+        {
+            IEnumerable<LocationLoot> model = new List<LocationLoot>();
+            var model2 = Mapper.Map(model);
+            var model3 = Mapper.Map(model2);
+            var model4 = Mapper.Map(model3);
+            var model5 = Mapper.Map(model4);
+
+            Assert.IsType(model3.GetType(), model5);
+        }
+        [Fact]
+        public void Location()
+        {
+            IEnumerable<Location> model = new List<Location>();
+            var model2 = Mapper.Map(model);
+            var model3 = Mapper.Map(model2);
+            var model4 = Mapper.Map(model3);
+            var model5 = Mapper.Map(model4);
+
+            Assert.IsType(model3.GetType(), model5);
+        }
+        [Fact]
+        public void Loot()
+        {
+            IEnumerable<Loot> model = new List<Loot>();
+            var model2 = Mapper.Map(model);
+            var model3 = Mapper.Map(model2);
+            var model4 = Mapper.Map(model3);
+            var model5 = Mapper.Map(model4);
+
+            Assert.IsType(model3.GetType(), model5);
+        }
+        [Fact]
+        public void PlayerEquipment()
+        {
+            IEnumerable<PlayerEquipment> model = new List<PlayerEquipment>();
+            var model2 = Mapper.Map(model);
+            var model3 = Mapper.Map(model2);
+            var model4 = Mapper.Map(model3);
+            var model5 = Mapper.Map(model4);
+
+            Assert.IsType(model3.GetType(), model5);
+        }
+        [Fact]
+        public void PlayerLocation()
+        {
+            IEnumerable<PlayerLocation> model = new List<PlayerLocation>();
+            var model2 = Mapper.Map(model);
+            var model3 = Mapper.Map(model2);
+            var model4 = Mapper.Map(model3);
+            var model5 = Mapper.Map(model4);
+
+            Assert.IsType(model3.GetType(), model5);
+        }
+        [Fact]
+        public void PlayerLoot()
+        {
+            IEnumerable<PlayerLoot> model = new List<PlayerLoot>();
+            var model2 = Mapper.Map(model);
+            var model3 = Mapper.Map(model2);
+            var model4 = Mapper.Map(model3);
+            var model5 = Mapper.Map(model4);
+
+            Assert.IsType(model3.GetType(), model5);
+        }
+        [Fact]
+        public void Player()
+        {
+            IEnumerable<Player> model = new List<Player>();
+            var model2 = Mapper.Map(model);
+            var model3 = Mapper.Map(model2);
+            var model4 = Mapper.Map(model3);
+            var model5 = Mapper.Map(model4);
+
+            Assert.IsType(model3.GetType(), model5);
+        }
+        [Fact]
+        public void RecipeLoot()
+        {
+            IEnumerable<RecipeLoot> model = new List<RecipeLoot>();
+            var model2 = Mapper.Map(model);
+            var model3 = Mapper.Map(model2);
+            var model4 = Mapper.Map(model3);
+            var model5 = Mapper.Map(model4);
+
+            Assert.IsType(model3.GetType(), model5);
+        }
+        [Fact]
+        public void Recipe()
+        {
+            IEnumerable<Recipe> model = new List<Recipe>();
+            var model2 = Mapper.Map(model);
+            var model3 = Mapper.Map(model2);
+            var model4 = Mapper.Map(model3);
+            var model5 = Mapper.Map(model4);
+
+            Assert.IsType(model3.GetType(), model5);
+        }
+        [Fact]
+        public void StoreEquipment()
+        {
+            IEnumerable<StoreEquipment> model = new List<StoreEquipment>();
+            var model2 = Mapper.Map(model);
+            var model3 = Mapper.Map(model2);
+            var model4 = Mapper.Map(model3);
+            var model5 = Mapper.Map(model4);
+
+            Assert.IsType(model3.GetType(), model5);
+        }
+        [Fact]
+        public void StoreFlavor()
+        {
+            IEnumerable<StoreFlavor> model = new List<StoreFlavor>();
+            var model2 = Mapper.Map(model);
+            var model3 = Mapper.Map(model2);
+            var model4 = Mapper.Map(model3);
+            var model5 = Mapper.Map(model4);
+
+            Assert.IsType(model3.GetType(), model5);
+        }
+        [Fact]
+        public void Store()
+        {
+            IEnumerable<Store> model = new List<Store>();
+            var model2 = Mapper.Map(model);
+            var model3 = Mapper.Map(model2);
+            var model4 = Mapper.Map(model3);
+            var model5 = Mapper.Map(model4);
+
+            Assert.IsType(model3.GetType(), model5);
+        }
     }
 }
