@@ -15,9 +15,8 @@ namespace CookingQuest.Tests
     public class PlayerTests
     {
                [Fact]
-        public async Task Add_AdventurerPartyAsync_writes_to_database()
+        public async Task PlayerRepo()
         {
-            // In-memory database only exists while the connection is open
             var connection = new SqliteConnection("DataSource=:memory:");
             connection.Open();
 
@@ -27,16 +26,13 @@ namespace CookingQuest.Tests
                     .UseSqlite(connection)
                     .Options;
 
-                // Create the schema in the database
                 using (var context = new CookingQuestContext(options))
                 {
                     context.Database.EnsureCreated();
                 }
 
-                // Run the test against one instance of the context
                 using (var context = new CookingQuestContext(options))
                 {
-                    //create new Repo
                     context.Player.Add(new Player
                     {
                         Gold = 10,
