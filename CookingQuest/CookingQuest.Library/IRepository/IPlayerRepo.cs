@@ -14,9 +14,11 @@ namespace CookingQuest.Library.IRepository
         Task<IEnumerable<EquipmentModel>> GetPlayerEquipment(int PlayerId);
         Task<IEnumerable<LocationModel>> GetUnlockedLocations(int PlayerId);
         Task<IEnumerable<LootModel>> GetLoot(int PlayerId);
-        Task<int> AddPlayer(string name);
         Task<bool> EditPlayer(PlayerModel player);
-        Task<bool> DeletePlayer(int PlayerId);
+        Task<bool> EditPlayerLoot(LootModel lootModel);
+        Task<bool> EditPlayerEquipment(EquipmentModel equipmentModel);
+        Task<bool> DeletePlayerEquipment(int playerEquipmentId);
+        Task<bool> DeletePlayerLoot(int PlayerLootId);
         void Save();
     }
 }
