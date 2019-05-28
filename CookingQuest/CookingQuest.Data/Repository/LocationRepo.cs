@@ -74,7 +74,22 @@ namespace CookingQuest.Data.Repository
                 return null;
             }
         }
-            
+        public async Task<IEnumerable<LootModel>> GetQuestLoot(int locationID)
+        {
+            var lootlist = await GetLocationLoot(locationID);
+            var lootlist2 = new List<LootModel>();
+            Random rand = new Random();
+            foreach (var loot in lootlist)
+            {
+                int roll = rand.Next(11) * loot.DropRate;
+                if (roll > 25)
+                {
+                    lootlist2.Add(loot);
+                }
+            }
+            return lootlist2;
+        }
+
 
 
         public async Task<int> Create(LocationModel location, bool ignoreId = true)
@@ -104,8 +119,6 @@ namespace CookingQuest.Data.Repository
             }
         }
 
-        // This code added to correctly implement the disposable pattern.
-       
 
         public async Task<bool> Update(LocationModel location)
         {
@@ -129,8 +142,9 @@ namespace CookingQuest.Data.Repository
                 _logger.Error(ex.ToString());
                 return false;
             }
-           
         }
+
+       
 
         public async Task<bool> DeleteAsync(int id)
         {

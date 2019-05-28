@@ -52,6 +52,20 @@ namespace CookingQuest.API.Controllers
             return NotFound();
         }
 
+        // GET: api/Player/{Email}
+        [HttpGet("[action]/{email}")]
+        public async Task<ActionResult<PlayerModel>> Account(string email)
+        {
+            var player = await PlayerRepo.GetPlayerByEmail(email);
+
+            if (player == null)
+            {
+                return NotFound();
+            }
+            _logger.Info($"Returning {player.PlayerId}");
+            return Ok(player);
+        }
+
         // GET: api/Player/Equipment/{PlayerId}
         [HttpGet("[action]/{id}")]
         public async Task<ActionResult<IEnumerable<PlayerModel>>> Equipment(int id)
@@ -65,7 +79,30 @@ namespace CookingQuest.API.Controllers
             _logger.Info($"Returning {playerEquip.Count()} equipment from player {id}");
             return Ok(playerEquip);
         }
+        // GET: api/Player/Equipment/{PlayerId}
+        [HttpPost("[action]/{id}")]
+        public async Task<ActionResult> Equipment(int id, EquipmentModel equipmentModel)
+        {
+            var equipment = await PlayerRepo.EditPlayerEquipment(equipmentModel);
 
+            if (equipment == false)
+            {
+                return NotFound();
+            }
+            _logger.Info($"Updated {equipmentModel.Name} for player {id}");
+            return NoContent();
+        }
+        // DELETE: api/Player/loot/Delete/{playerid}
+        [HttpDelete("[action]/{id}")]
+        public async Task<ActionResult> DeleteEquipment(int id)
+        {
+            if (await PlayerRepo.DeletePlayerEquipment(id))
+            {
+                _logger.Info($"Deleted Player Equipment of player: {id}");
+                return NoContent();
+            }
+            return NotFound();
+        }
         // GET: api/Player/Locations/{PlayerId}
         [HttpGet("[action]/{id}")]
         public async Task<ActionResult<IEnumerable<LocationModel>>> Locations(int id)
@@ -93,17 +130,29 @@ namespace CookingQuest.API.Controllers
             _logger.Info($"Returning {loot.Count()} for player {id}");
             return Ok(loot);
         }
-        // POST: api/Player
-        [HttpPost]
-        public async Task<ActionResult> Post([FromBody] string value)
+        // GET: api/Player/Loot/{PlayerId}
+        [HttpPost("[action]/{id}")]
+        public async Task<ActionResult> Loot(int id, LootModel lootModel)
         {
-            int PlayerId = await PlayerRepo.AddPlayer(value);
-            if(PlayerId <= -1)
+            var loot = await PlayerRepo.EditPlayerLoot(lootModel);
+
+            if (loot == false)
             {
-                return BadRequest();
+                return NotFound();
             }
-            _logger.Info($"Route created for {value} ({PlayerId})");
-            return CreatedAtRoute("Get", new { Id = PlayerId }, Get(PlayerId)); ;
+            _logger.Info($"Updated {lootModel.Name} for player {id}");
+            return NoContent();
+        }
+        // DELETE: api/Player/loot/Delete/{playerid}
+        [HttpDelete("[action]/{id}")]
+        public async Task<ActionResult> DeleteLoot(int id)
+        {
+            if (await PlayerRepo.DeletePlayerLoot(id))
+            {
+                _logger.Info($"Deleted Player Loot of player: {id}");
+                return NoContent();
+            }
+            return NotFound();
         }
 
         // PUT: api/Player/5
@@ -126,18 +175,6 @@ namespace CookingQuest.API.Controllers
             {
                 return NotFound();
             }
-        }
-
-        // DELETE: api/Player/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
-        {
-            if(await PlayerRepo.DeletePlayer(id))
-            {
-                _logger.Info($"Deleted Player {id}");
-                return NoContent();
-            }
-            return NotFound();
         }
     }
 }

@@ -45,15 +45,35 @@ namespace CookingQuest.Data.Repository
                 return null;
             }
         }
+        public async Task<PlayerModel> GetPlayerByEmail(string email)
+        {
+            try
+            {
+                Account account = await Task.FromResult(_dbContext.Account.Where(a => a.Username == email).FirstOrDefault());
+                if(account == null)
+                {
+                    throw new ArgumentException();
+                }
+
+                var player = await _dbContext.Player.FindAsync(account.PlayerId);
+                return Mapper.Map(player);
+            }
+
+            catch (Exception ex)
+            {
+                _logger.Error(ex.ToString());
+                return null;
+            }
+        }
         public async Task<IEnumerable<EquipmentModel>> GetPlayerEquipment(int PlayerId)
         {
             try
             {
                 var player_equipment = await Task.FromResult(_dbContext.PlayerEquipment.Where(x => x.PlayerId == PlayerId));
 
-                var equipment = await Task.FromResult(_dbContext.Equipment);
+                var equipment = Mapper.Map(await Task.FromResult(_dbContext.Equipment));
 
-                var items = new List<Equipment>();
+                var items = new List<EquipmentModel>();
 
                 foreach (var equip in equipment)
                 {
@@ -61,11 +81,12 @@ namespace CookingQuest.Data.Repository
                     {
                         if (pe.EquipmentId == equip.EquipmentId)
                         {
+                            equip.PlayerEquipmentId = pe.PlayerEquipmentId;
                             items.Add(equip);
                         }
                     }
                 }
-                return Mapper.Map(items);
+                return items;
             }
 
             catch (Exception ex)
@@ -108,6 +129,7 @@ namespace CookingQuest.Data.Repository
                         if (pl.LootId == l.LootId)
                         {
                             l.Quantity = pl.Quantity;
+                            l.PlayerLootId = pl.PlayerLootId;
                             items.Add(l);
                         }
                     }
@@ -120,31 +142,7 @@ namespace CookingQuest.Data.Repository
                 return null;
             }
         }
-        public async Task<int> AddPlayer(string name)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(name))
-                {
-                    throw new ArgumentException();
-                }
-
-                PlayerModel player = new PlayerModel
-                {
-                    Name = name,
-                };
-                await _dbContext.Player.AddAsync(Mapper.Map(player));
-                Save();
-                 
-                return await Task.FromResult(_dbContext.Player.OrderByDescending(x=>x.PlayerId).FirstOrDefault().PlayerId);
-            }
-
-            catch (Exception ex)
-            {
-                _logger.Error(ex.ToString());
-                return -1;
-            }
-        }
+        
         public async Task<bool> EditPlayer(PlayerModel player)
         {
             try
@@ -169,25 +167,100 @@ namespace CookingQuest.Data.Repository
                 return false;
             }
         }
-
-        public async Task<bool> DeletePlayer(int PlayerId)
+        public async Task<bool> EditPlayerLoot(LootModel lootModel)
         {
             try
             {
-                Player CurrentPlayer = await _dbContext.Player.FindAsync(PlayerId);
-
-                if(await Task.FromResult(_dbContext.Account.FirstOrDefault(x => x.PlayerId == PlayerId)) != null)
+                if (lootModel == null)
                 {
                     throw new ArgumentException();
                 }
 
-                if(CurrentPlayer == null)
+                PlayerLoot CurrentLoot = await _dbContext.PlayerLoot.FindAsync(lootModel.PlayerLootId);
+                PlayerLoot newLoot = new PlayerLoot
+                {
+                    LootId = CurrentLoot.LootId,
+                    PlayerId = CurrentLoot.PlayerId,
+                    PlayerLootId = CurrentLoot.PlayerLootId,
+                    Quantity = lootModel.Quantity,
+                };
+                _dbContext.Entry(CurrentLoot).CurrentValues.SetValues(newLoot);
+
+
+                Loot loot = await _dbContext.Loot.FindAsync(lootModel.LootId);
+                Loot newLoot2 = Mapper.Map(lootModel);
+                _dbContext.Entry(loot).CurrentValues.SetValues(newLoot2);
+
+                Save();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.ToString());
+                return false;
+            }
+        }
+        public async Task<bool> EditPlayerEquipment(EquipmentModel equipmentModel)
+        {
+            try
+            {
+                if (equipmentModel == null)
+                {
+                    throw new ArgumentException();
+                }
+
+                Equipment equipment = await _dbContext.Equipment.FindAsync(equipmentModel.EquipmentId);
+                Equipment equipment2 = Mapper.Map(equipmentModel);
+                _dbContext.Entry(equipment).CurrentValues.SetValues(equipment2);
+
+                Save();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.ToString());
+                return false;
+            }
+        }
+        public async Task<bool> DeletePlayerEquipment(int playerEquipmentId)
+        {
+            try
+            {
+                PlayerEquipment playerEquipment = await _dbContext.PlayerEquipment.FindAsync(playerEquipmentId);
+
+                if (playerEquipment == null)
                 {
                     throw new ArgumentException();
                 }
                 else
                 {
-                    _dbContext.Player.Remove(CurrentPlayer);
+                    _dbContext.PlayerEquipment.Remove(playerEquipment);
+                    Save();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.ToString());
+                return false;
+            }
+        }
+        public async Task<bool> DeletePlayerLoot(int PlayerLootId)
+        {
+            try
+            {
+                PlayerLoot playerLoot = await _dbContext.PlayerLoot.FindAsync(PlayerLootId);
+
+                if (playerLoot == null)
+                {
+                    throw new ArgumentException();
+                }
+                else
+                {
+                    _dbContext.PlayerLoot.Remove(playerLoot);
                     Save();
                 }
 

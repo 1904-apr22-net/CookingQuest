@@ -17,7 +17,12 @@ namespace CookingQuest.API.Controllers
         private static readonly ILogger _logger = LogManager.GetCurrentClassLogger();
         // GET api/Location
 
+<<<<<<< HEAD
         private ILocationRepo _repo;
+=======
+       
+        public ILocationRepo _repo;
+>>>>>>> master
 
         public LocationController(ILocationRepo repo) => _repo = repo ?? throw new ArgumentNullException(nameof(repo));
         [HttpGet]
@@ -59,7 +64,7 @@ namespace CookingQuest.API.Controllers
             }
         }
 
-        // GET: api/Location/Loot/{PlayerId}
+        // GET: api/Location/Loot/{LocationId}
         [HttpGet("[action]/{id}")]
         public async Task<ActionResult<IEnumerable<LootModel>>> Loot(int id)
         {
@@ -71,6 +76,28 @@ namespace CookingQuest.API.Controllers
             }
             _logger.Info($"Returning {loot.Count()} for location {id}");
             return Ok(loot);
+        }
+
+        // GET: api/Location/Quest/{LocationId}
+        [HttpGet("[action]/{id}")]
+        public async Task<ActionResult<IEnumerable<LootModel>>> Quest(int id)
+        {
+
+            int LocationId = id;
+            try
+            {
+                var success = await _repo.GetQuestLoot(LocationId);
+                if (success==null)
+                {
+                    return NotFound(); // 400 Bad Request
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message); // 400 Bad Request
+            }
+            _logger.Info($"Returning quest loot {id}");
+            return NoContent(); // 204 No Content
         }
 
         // POST api/Location
@@ -94,7 +121,8 @@ namespace CookingQuest.API.Controllers
           
         }
 
-        // PUT api/Location/5
+       
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] LocationModel location)
         {
@@ -118,6 +146,9 @@ namespace CookingQuest.API.Controllers
             _logger.Info($"Updated location at {id}");
             return NoContent(); // 204 No Content
         }
+
+
+      
 
         // DELETE api/Location/5
         [HttpDelete("{id}")]

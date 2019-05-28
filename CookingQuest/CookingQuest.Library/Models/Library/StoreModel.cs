@@ -9,5 +9,24 @@ namespace CookingQuest.Library.Models.Library
         public int StoreId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public bool Validate()
+        {
+            if (string.IsNullOrWhiteSpace(Name))
+            {
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(Description))
+            {
+                return false;
+            }
+            if (StoreId < 0)
+            {
+                return false;
+            }
+            return true;
+
+        }
     }
+
+
 }
