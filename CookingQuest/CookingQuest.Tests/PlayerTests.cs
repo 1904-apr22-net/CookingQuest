@@ -157,6 +157,25 @@ namespace CookingQuest.Tests
                         PlayerLootId = 2,
                     });
                     context.SaveChanges();
+                    context.Flavor.Add(new Flavor
+                    {
+                        FlavorId = 1,
+                        Description ="v",
+                        Name = "ad"
+                    });
+                    context.SaveChanges();
+                    context.FlavorLoot.Add(new FlavorLoot
+                    {
+                        FlavorId = 1,
+                        LootId = 1,
+                    });
+                    context.SaveChanges();
+                    context.FlavorLoot.Add(new FlavorLoot
+                    {
+                        FlavorId = 1,
+                        LootId = 2,
+                    });
+                    context.SaveChanges();
                     var testRepo = new PlayerRepo(context);
 
                     var loot = await testRepo.GetLoot(1);
@@ -364,6 +383,18 @@ namespace CookingQuest.Tests
                         LootId = 1,
                         PlayerId = 1,
                         PlayerLootId = 1,
+                    });
+                    context.Flavor.Add(new Flavor
+                    {
+                        FlavorId = 1,
+                        Description = "v",
+                        Name = "ad"
+                    });
+                    context.SaveChanges();
+                    context.FlavorLoot.Add(new FlavorLoot
+                    {
+                        FlavorId = 1,
+                        LootId = 1,
                     });
                     context.SaveChanges();
                     var testRepo = new PlayerRepo(context);

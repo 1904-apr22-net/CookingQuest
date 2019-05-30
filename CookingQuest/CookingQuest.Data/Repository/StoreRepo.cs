@@ -20,7 +20,24 @@ namespace CookingQuest.Data.Repository
         {
             try
             {
-                return Mapper.Map(_dbContext.Store);
+                var stores = _dbContext.Store;
+                var Stores = Mapper.Map(stores).ToList();
+                List<FlavorModel> flavors = new List<FlavorModel>();
+                foreach(var s in Stores)
+                {
+                    var store_flavor = _dbContext.StoreFlavor.Where(x => x.StoreId == s.StoreId);
+                    foreach(var sf in store_flavor)
+                    {
+                        var y = Mapper.Map(_dbContext.Flavor.Where(x => x.FlavorId == sf.FlavorId).FirstOrDefault());
+                        y.Bonus = sf.Bonus;
+                        flavors.Add(y);
+                        
+                    }
+                    s.Flavors.AddRange(flavors);
+                    flavors.Clear();
+                }
+                
+                return Stores;
             }
             catch (Exception ex)
             {

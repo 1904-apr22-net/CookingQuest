@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CookingQuest.Data.Entities;
 using CookingQuest.Data.Repository;
+using CookingQuest.Library.IRepository;
 using CookingQuest.Library.Models.Library;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,12 +14,24 @@ namespace CookingQuest.API.Controllers
     [ApiController]
     public class StoreController : ControllerBase
     {
-        private readonly StoreRepo _repo;
-        public StoreController(StoreRepo repo) => _repo = repo ?? throw new ArgumentNullException(nameof(repo));
-
+        public IStoreRepo _repo { get; set; }
+        public StoreController(IStoreRepo storeRepo)
+        {
+            this._repo = storeRepo ?? throw new ArgumentNullException(nameof(storeRepo));
+        }
         // GET api/values
         [HttpGet]
-        public IEnumerable<StoreModel> Get() => _repo.GetAll();
+        public ActionResult<IEnumerable<StoreModel>> Get()
+        {
+            var stores = _repo.GetAll();
+
+            if (stores == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(stores);
+        }
         // GET api/values/5
         [HttpGet("{id}")]
         public ActionResult<StoreModel> Get(int id)
