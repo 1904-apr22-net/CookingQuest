@@ -62,6 +62,7 @@ namespace CookingQuest.Data.Repository
                         if (pl.LootId == l.LootId)
                         {
                             l.DropRate = pl.DropRate;
+                            l.LocationLootId = pl.LocationLootId;
                             items.Add(l);
                         }
                     }
@@ -81,8 +82,8 @@ namespace CookingQuest.Data.Repository
             Random rand = new Random();
             foreach (var loot in lootlist)
             {
-                int roll = rand.Next(11) * loot.DropRate;
-                if (roll > 25)
+                int roll = rand.Next(101);
+                if (roll > loot.DropRate)
                 {
                     lootlist2.Add(loot);
                 }
@@ -144,7 +145,41 @@ namespace CookingQuest.Data.Repository
             }
         }
 
-       
+        public async Task<bool> EditLocationLoot(LootModel lootModel)
+        {
+            try
+            {
+                if (lootModel == null)
+                {
+                    throw new ArgumentException();
+                }
+
+                LocationLoot CurrentLoot = await _dbContext.LocationLoot.FindAsync(lootModel.LocationLootId);
+                LocationLoot newLoot = new LocationLoot
+                {
+                    LootId = CurrentLoot.LootId,
+                    LocationId = CurrentLoot.LocationId,
+                    LocationLootId = CurrentLoot.LocationLootId,
+                    DropRate = lootModel.DropRate,
+                };
+                _dbContext.Entry(CurrentLoot).CurrentValues.SetValues(newLoot);
+
+
+                Loot loot = await _dbContext.Loot.FindAsync(lootModel.LootId);
+                Loot newLoot2 = Mapper.Map(lootModel);
+                _dbContext.Entry(loot).CurrentValues.SetValues(newLoot2);
+
+                Save();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.ToString());
+                return false;
+            }
+        }
+
 
         public async Task<bool> DeleteAsync(int id)
         {
@@ -172,9 +207,41 @@ namespace CookingQuest.Data.Repository
             }
         }
 
+        public async Task<bool> DeleteLocationLoot(int LocationLootId)
+        {
+            try
+            {
+                LocationLoot locationLoot = await _dbContext.LocationLoot.FindAsync(LocationLootId);
+
+                if (locationLoot == null)
+                {
+                    throw new ArgumentException();
+                }
+                else
+                {
+                    _dbContext.LocationLoot.Remove(locationLoot);
+                    Save();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.ToString());
+                return false;
+            }
+        }
+
         public void Save()
         {
-            _dbContext.SaveChanges();
+            try
+            {
+                _dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.ToString());
+            }
         }
 
         private bool disposedValue = false; // To detect redundant calls

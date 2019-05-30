@@ -118,7 +118,20 @@ namespace CookingQuest.API.Controllers
           
         }
 
-       
+        [HttpPut("[action]")]
+        public async Task<ActionResult> Loot([FromBody] LootModel newloot)
+        {
+            var result = await _repo.EditLocationLoot(newloot);
+
+            if (result == false)
+            {
+                return NotFound();
+            }
+            _logger.Info($"Updated Location Loot at {newloot.LocationLootId}");
+            return Ok(result);
+        }
+
+
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] LocationModel location)

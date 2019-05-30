@@ -16,6 +16,7 @@ namespace CookingQuest.Library.IRepository
         Task<IEnumerable<LootModel>> GetQuestLoot(int id);
         Task<int> Create(LocationModel location, bool ignoreId = true);
         Task<bool> Update(LocationModel location);
+        Task<bool> EditLocationLoot(LootModel lootModel);
         Task<bool> DeleteAsync(int id);
         void Save();
     }

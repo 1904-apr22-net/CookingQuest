@@ -32,5 +32,6 @@ namespace CookingQuest.Library.Models.Library
         public int DropRate { get; set; } = 1;
 
         public int PlayerLootId { get; set; }
+        public int LocationLootId { get; set; }
     }
 }
