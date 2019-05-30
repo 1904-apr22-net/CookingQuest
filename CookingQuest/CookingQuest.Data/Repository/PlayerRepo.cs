@@ -216,15 +216,8 @@ namespace CookingQuest.Data.Repository
                     PlayerId = player.PlayerId,
                 };
 
-                if (player == null || equipment == null || playerEquipment == null)
-                {
-                    throw new ArgumentException();
-                }
-                else
-                {
-                    _dbContext.PlayerEquipment.Add(playerEquipment);
-                    Save();
-                }
+                _dbContext.PlayerEquipment.Add(playerEquipment);
+                Save();
 
                 return true;
             }
