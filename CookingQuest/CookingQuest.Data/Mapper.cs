@@ -13,12 +13,14 @@ namespace CookingQuest.Data
             StoreId = store.StoreId,
             Name = store.Name,
             Description = store.Description,
+            Difficulty = store.Difficulty,
         };
         public static StoreModel Map(Store store) => new StoreModel
         {
             StoreId = store.StoreId,
             Name = store.Name,
             Description = store.Description,
+            Difficulty = store.Difficulty,
         };
 
         public static Recipe Map(RecipeModel recipe) => new Recipe
