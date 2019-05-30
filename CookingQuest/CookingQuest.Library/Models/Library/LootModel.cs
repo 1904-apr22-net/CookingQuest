@@ -33,6 +33,7 @@ namespace CookingQuest.Library.Models.Library
 
         public FlavorModel Flavor { get; set; }   
         public int PlayerLootId { get; set; }
+        public int LocationLootId { get; set; }
         public int FlavorLootId { get; set; }
     }
 }
