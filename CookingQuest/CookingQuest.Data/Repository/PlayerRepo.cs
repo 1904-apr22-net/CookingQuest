@@ -128,6 +128,9 @@ namespace CookingQuest.Data.Repository
                     {
                         if (pl.LootId == l.LootId)
                         {
+                            var flavor_loot = await Task.FromResult(_dbContext.FlavorLoot.Where(x => x.LootId == l.LootId).FirstOrDefault());
+                            var flavor = await Task.FromResult(_dbContext.Flavor.Where(x => x.FlavorId == flavor_loot.FlavorId).FirstOrDefault());
+                            l.Flavor = Mapper.Map(flavor);
                             l.Quantity = pl.Quantity;
                             l.PlayerLootId = pl.PlayerLootId;
                             items.Add(l);
@@ -201,6 +204,37 @@ namespace CookingQuest.Data.Repository
                 return false;
             }
         }
+        public async Task<bool> AddPlayerEquipment(EquipmentModel equipmentModel, int PlayerId)
+        {
+            try
+            {
+                Player player = await _dbContext.Player.FindAsync(PlayerId);
+                Equipment equipment = Mapper.Map(equipmentModel);
+                PlayerEquipment playerEquipment = new PlayerEquipment()
+                {
+                    EquipmentId = equipment.EquipmentId,
+                    PlayerId = player.PlayerId,
+                };
+
+                if (player == null || equipment == null || playerEquipment == null)
+                {
+                    throw new ArgumentException();
+                }
+                else
+                {
+                    _dbContext.PlayerEquipment.Add(playerEquipment);
+                    Save();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.ToString());
+                return false;
+            }
+        }
+
         public async Task<bool> EditPlayerEquipment(EquipmentModel equipmentModel)
         {
             try

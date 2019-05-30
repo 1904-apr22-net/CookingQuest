@@ -395,16 +395,16 @@ INSERT INTO cq.Player(Name, Gold)
 VALUES
 ('Paul',100000),
 ('Sadiki',500),
-('Justin',0),
+('Maggie',0),
 ('Batman',0);
 
 INSERT INTO cq.Account
-(Username,Password,PlayerId)
+(Username,Password,PlayerId,IsAdmin)
 VALUES
-('pauls_awesome@hotmail.com','password', 1),
-('paul_grimes8@hotmail.com','password', 2),
-('Justin','password', 3),
-('Batman','password', 4);
+('pauls_awesome@hotmail.com','password', 1,1),
+('paul_grimes8@hotmail.com','password', 2,0),
+('frecklemaggie@yahoo.com','password', 3, 1),
+('Batman','password', 4, 0);
 
 
 
@@ -513,9 +513,9 @@ Values
 (3,1),
 (3,6),
 (3,11),
-(3,1),
-(3,6),
-(3,11);
+(4,1),
+(4,6),
+(4,11);
 
 INSERT INTO cq.Player_Location
 (PlayerId,LocationId)

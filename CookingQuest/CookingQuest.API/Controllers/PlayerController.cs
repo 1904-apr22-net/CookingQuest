@@ -103,6 +103,22 @@ namespace CookingQuest.API.Controllers
             }
             return NotFound();
         }
+        // GET: api/Player/Equipment/{PlayerId}
+        [HttpPost("[action]/{id}")]
+        public async Task<ActionResult> PostEquipment(int id, EquipmentModel equipmentModel)
+        {
+            var equipment = await PlayerRepo.AddPlayerEquipment(equipmentModel, id);
+
+            if (equipment == false)
+            {
+                return NotFound();
+            }
+            _logger.Info($"Added {equipmentModel.Name} for player {id}");
+            return NoContent();
+
+        }
+
+
         // GET: api/Player/Locations/{PlayerId}
         [HttpGet("[action]/{id}")]
         public async Task<ActionResult<IEnumerable<LocationModel>>> Locations(int id)
