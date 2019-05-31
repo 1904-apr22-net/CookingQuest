@@ -401,10 +401,10 @@ VALUES
 INSERT INTO cq.Account
 (Username,Password,PlayerId,IsAdmin)
 VALUES
-('pauls_awesome@hotmail.com','password', 1,1),
+('frecklemaggie@yahoo.com','password', 1,1),
 ('paul_grimes8@hotmail.com','password', 2,0),
-('frecklemaggie@yahoo.com','password', 3, 1),
-('Batman','password', 4, 0);
+('sadikisaunders@gmail.com','password',3,1),
+('szsaunders@gmail.com','password',4,0)
 
 
 
