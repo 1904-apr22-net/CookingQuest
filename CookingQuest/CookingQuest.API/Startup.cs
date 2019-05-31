@@ -26,6 +26,8 @@ namespace CookingQuest.API
 
         public IConfiguration Configuration { get; }
 
+        readonly string AllowLocalAngularAllMethods = "_AllowLocalAngularAllMethods";
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -42,6 +44,14 @@ namespace CookingQuest.API
             services.AddScoped<IPlayerRepo, PlayerRepo>();
             services.AddScoped<IRecipeRepo, RecipeRepo>();
             services.AddScoped<IStoreRepo, StoreRepo>();
+            services.AddCors(options =>
+            {
+                options.AddPolicy(AllowLocalAngularAllMethods,
+                    builder =>
+                    {
+                        builder.WithOrigins("https://localhost:4200").AllowAnyMethod();
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +68,7 @@ namespace CookingQuest.API
             }
 
             app.UseHttpsRedirection();
+            app.UseCors(AllowLocalAngularAllMethods);
             app.UseMvc();
         }
     }
