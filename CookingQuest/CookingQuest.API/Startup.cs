@@ -49,7 +49,7 @@ namespace CookingQuest.API
                 options.AddPolicy(AllowLocalAngularAllMethods,
                     builder =>
                     {
-                        builder.WithOrigins("https://localhost:4200").AllowAnyMethod();
+                        builder.WithOrigins("http://localhost:4200").AllowAnyMethod();
                     });
             });
         }
