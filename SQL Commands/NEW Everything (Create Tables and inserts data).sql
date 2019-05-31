@@ -393,9 +393,9 @@ GO
 
 INSERT INTO cq.Player(Name, Gold) 
 VALUES
-('Paul',100000),
-('Sadiki',500),
-('Maggie',0),
+('Maggie',100000),
+('Paul',500),
+('Sadiki',0),
 ('Batman',0);
 
 INSERT INTO cq.Account
