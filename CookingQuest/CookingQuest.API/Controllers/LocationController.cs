@@ -83,18 +83,17 @@ namespace CookingQuest.API.Controllers
             int LocationId = id;
             try
             {
-                var success = await _repo.GetQuestLoot(LocationId);
-                if (success==null)
-                {
-                    return NotFound(); // 400 Bad Request
-                }
+                var loot = await _repo.GetQuestLoot(LocationId);
+              
+                _logger.Info($"Returning quest loot {id}");
+                return Ok(loot);
             }
             catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message); // 400 Bad Request
             }
-            _logger.Info($"Returning quest loot {id}");
-            return NoContent(); // 204 No Content
+            
+            
         }
 
         // POST api/Location
