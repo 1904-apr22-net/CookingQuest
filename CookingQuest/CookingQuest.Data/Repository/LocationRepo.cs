@@ -75,14 +75,14 @@ namespace CookingQuest.Data.Repository
                 return null;
             }
         }
-        public async Task<IEnumerable<LootModel>> GetQuestLoot(int locationID, int equipmentID)
+        public async Task<IEnumerable<LootModel>> GetQuestLoot(int locationID, int modifier)
         {
             var lootlist = await GetLocationLoot(locationID);
             var lootlist2 = new List<LootModel>();
             Random rand = new Random();
             foreach (var loot in lootlist)
             {
-                int roll = rand.Next(101) *equipmentID;
+                int roll = rand.Next(101) * modifier;
                 if (roll > loot.DropRate)
                 {
                     lootlist2.Add(loot);
