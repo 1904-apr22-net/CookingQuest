@@ -15,7 +15,6 @@ namespace CookingQuest.Library.Models.Library
 
         [Required]
         [StringLength(30, ErrorMessage = "Do not enter more than 30 characters")]
-        [RegularExpression("^[a-zA-Z -]*$", ErrorMessage = "Only Letters from the Alphabet")]
         public string Name { get; set; }
 
         [Required]
@@ -24,7 +23,6 @@ namespace CookingQuest.Library.Models.Library
 
         [Required]
         [StringLength(30, ErrorMessage = "Do not enter more than 30 characters")]
-        [RegularExpression("^[a-zA-Z -]*$", ErrorMessage = "Only Letters from the Alphabet")]
         public string Type { get; set; }
 
         [Required]
