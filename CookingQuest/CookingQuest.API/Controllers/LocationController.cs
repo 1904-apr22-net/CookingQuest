@@ -75,8 +75,8 @@ namespace CookingQuest.API.Controllers
             return Ok(loot);
         }
 
-        // GET: api/Location/Quest/{LocationId}
-        [HttpGet("[action]/{id}")]
+        // GET: api/Location/Quest/{LocationId}/{equipmentid}
+        [HttpGet("[action]/{id}/{equipmentid}")]
         public async Task<ActionResult<IEnumerable<LootModel>>> Quest(int id, int equipmentid = 1)
         {
 
