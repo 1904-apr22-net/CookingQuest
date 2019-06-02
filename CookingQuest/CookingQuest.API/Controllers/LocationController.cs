@@ -77,13 +77,13 @@ namespace CookingQuest.API.Controllers
 
         // GET: api/Location/Quest/{LocationId}
         [HttpGet("[action]/{id}")]
-        public async Task<ActionResult<IEnumerable<LootModel>>> Quest(int id)
+        public async Task<ActionResult<IEnumerable<LootModel>>> Quest(int id, int equipmentid = 1)
         {
 
             int LocationId = id;
             try
             {
-                var loot = await _repo.GetQuestLoot(LocationId);
+                var loot = await _repo.GetQuestLoot(LocationId, equipmentid);
               
                 _logger.Info($"Returning quest loot {id}");
                 return Ok(loot);
