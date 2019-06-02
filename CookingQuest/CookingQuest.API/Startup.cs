@@ -49,7 +49,8 @@ namespace CookingQuest.API
                 options.AddPolicy(AllowLocalAngularAllMethods,
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+                        builder.WithOrigins("http://localhost:4200",
+                                    "https://cookingquestng.azurewebsites.net", "http://cookingquestng.azurewebsites.net").AllowAnyMethod().AllowAnyHeader();
                     });
             });
         }
