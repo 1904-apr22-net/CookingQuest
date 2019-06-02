@@ -13,7 +13,7 @@ namespace CookingQuest.Library.IRepository
         Task<IEnumerable<LocationModel>> GetAll();
         Task<LocationModel> Get(int id);
         Task<IEnumerable<LootModel>> GetLocationLoot(int id);
-        Task<IEnumerable<LootModel>> GetQuestLoot(int id);
+        Task<IEnumerable<LootModel>> GetQuestLoot(int id, int equipmentid);
         Task<int> Create(LocationModel location, bool ignoreId = true);
         Task<bool> Update(LocationModel location);
         Task<bool> EditLocationLoot(LootModel lootModel);

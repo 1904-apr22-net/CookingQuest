@@ -79,6 +79,7 @@ namespace CookingQuest.Data.Repository
                 {
                     foreach (var pe in player_equipment)
                     {
+                       
                         if (pe.EquipmentId == equip.EquipmentId)
                         {
                             equip.PlayerEquipmentId = pe.PlayerEquipmentId;
