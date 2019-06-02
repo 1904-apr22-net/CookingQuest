@@ -205,6 +205,34 @@ namespace CookingQuest.Data.Repository
                 return false;
             }
         }
+
+        public async Task<bool> AddPlayerLoot(LootModel lootModel, int PlayerId)
+        {
+            try
+            {
+                Player player = await _dbContext.Player.FindAsync(PlayerId);
+                Loot loot = Mapper.Map(lootModel);
+                PlayerLoot playerLoot = new PlayerLoot()
+                {
+                    LootId = loot.LootId,
+
+                    PlayerId = player.PlayerId,
+                };
+
+                _dbContext.PlayerLoot.Add(playerLoot);
+                Save();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.ToString());
+                return false;
+            }
+        }
+
+
+
         public async Task<bool> AddPlayerEquipment(EquipmentModel equipmentModel, int PlayerId)
         {
             try

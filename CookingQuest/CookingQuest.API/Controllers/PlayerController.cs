@@ -146,11 +146,24 @@ namespace CookingQuest.API.Controllers
             _logger.Info($"Returning {loot.Count()} for player {id}");
             return Ok(loot);
         }
-        // GET: api/Player/Loot/{PlayerId}
+        // Post: api/Player/Loot/{PlayerId}
         [HttpPost("[action]/{id}")]
         public async Task<ActionResult> Loot(int id, LootModel lootModel)
         {
             var loot = await PlayerRepo.EditPlayerLoot(lootModel);
+
+            if (loot == false)
+            {
+                return NotFound();
+            }
+            _logger.Info($"Updated {lootModel.Name} for player {id}");
+            return NoContent();
+        }
+
+        [HttpPost("[action]/{id}")]
+        public async Task<ActionResult> NewLoot(int id, LootModel lootModel)
+        {
+            var loot = await PlayerRepo.AddPlayerLoot(lootModel, id);
 
             if (loot == false)
             {
