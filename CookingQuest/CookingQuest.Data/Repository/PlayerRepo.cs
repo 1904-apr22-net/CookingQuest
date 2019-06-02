@@ -215,7 +215,7 @@ namespace CookingQuest.Data.Repository
                 PlayerLoot playerLoot = new PlayerLoot()
                 {
                     LootId = loot.LootId,
-
+                    Quantity = lootModel.Quantity,
                     PlayerId = player.PlayerId,
                 };
 
