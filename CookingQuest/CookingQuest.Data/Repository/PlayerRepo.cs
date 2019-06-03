@@ -212,12 +212,27 @@ namespace CookingQuest.Data.Repository
             {
                 Player player = await _dbContext.Player.FindAsync(PlayerId);
                 Loot loot = Mapper.Map(lootModel);
+                PlayerLoot pl =  await Task.FromResult(_dbContext.PlayerLoot.Where(x => x.LootId == lootModel.LootId && x.PlayerId == PlayerId).FirstOrDefault()) ?? new PlayerLoot();
                 PlayerLoot playerLoot = new PlayerLoot()
                 {
                     LootId = loot.LootId,
                     Quantity = lootModel.Quantity,
                     PlayerId = player.PlayerId,
                 };
+                if (pl.LootId == playerLoot.LootId && pl.PlayerId == playerLoot.PlayerId)
+                {
+                    playerLoot.Quantity = pl.Quantity + 1;
+                    try
+                    {
+                        await DeletePlayerLoot(pl.PlayerLootId);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Error(ex.ToString());
+                        return false;
+                    }
+
+                }
 
                 _dbContext.PlayerLoot.Add(playerLoot);
                 Save();
