@@ -119,6 +119,7 @@ namespace CookingQuest.API.Controllers
         }
 
 
+
         // GET: api/Player/Locations/{PlayerId}
         [HttpGet("[action]/{id}")]
         public async Task<ActionResult<IEnumerable<LocationModel>>> Locations(int id)
