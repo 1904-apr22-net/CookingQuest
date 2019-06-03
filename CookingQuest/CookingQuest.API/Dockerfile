@@ -1,22 +1,21 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.2-stretch-slim AS base
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build
+
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
-WORKDIR /src
-COPY ["CookingQuest.API/CookingQuest.API.csproj", "CookingQuest.API/"]
-COPY ["CookingQuest.Data/CookingQuest.Data.csproj", "CookingQuest.Data/"]
-COPY ["CookingQuest.Library/CookingQuest.Library.csproj", "CookingQuest.Library/"]
-RUN dotnet restore "CookingQuest.API/CookingQuest.API.csproj"
-COPY . .
-WORKDIR "/src/CookingQuest.API"
-RUN dotnet build "CookingQuest.API.csproj" -c Release -o /app
+COPY ./*.csproj ./
 
-FROM build AS publish
-RUN dotnet publish "CookingQuest.API.csproj" -c Release -o /app
+RUN dotnet restore
 
-FROM base AS final
+COPY . ./
+
+RUN dotnet build --no-restore --configuration Release
+
+RUN dotnet publish --no-build --configuration Release --output out
+
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.2
+
 WORKDIR /app
-COPY --from=publish /app .
-ENTRYPOINT ["dotnet", "CookingQuest.API.dll"]
+
+COPY --from=build /app/out ./
+
+ENTRYPOINT [ "dotnet", "CookingQuest.API.dll" ]
