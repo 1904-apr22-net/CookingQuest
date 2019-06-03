@@ -21,6 +21,7 @@ namespace CookingQuest.Library.IRepository
         Task<bool> DeletePlayerLoot(int PlayerLootId);
         Task<bool> AddPlayerEquipment(EquipmentModel equipmentModel, int PlayerId);
         Task<bool> AddPlayerLoot(LootModel lootModel, int PlayerId);
+        Task<bool> AddPlayerLootArray(IEnumerable<LootModel> lootModel, int PlayerId);
         void Save();
     }
 }

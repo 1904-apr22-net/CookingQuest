@@ -173,6 +173,19 @@ namespace CookingQuest.API.Controllers
             _logger.Info($"Updated {lootModel.Name} for player {id}");
             return NoContent();
         }
+
+        [HttpPost("[action]/{id}")]
+        public async Task<ActionResult> NewLootArr(int id, IEnumerable<LootModel> lootModel)
+        {
+            var loot = await PlayerRepo.AddPlayerLootArray(lootModel, id);
+
+            if (loot == false)
+            {
+                return NotFound();
+            }
+            _logger.Info($"Updated loot array for player {id}");
+            return NoContent();
+        }
         // DELETE: api/Player/loot/Delete/{playerid}
         [HttpDelete("[action]/{id}")]
         public async Task<ActionResult> DeleteLoot(int id)
