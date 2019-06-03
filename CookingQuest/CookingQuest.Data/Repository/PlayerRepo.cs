@@ -217,7 +217,7 @@ namespace CookingQuest.Data.Repository
                 {
                     LootId = loot.LootId,
                     Quantity = lootModel.Quantity,
-                    PlayerId = player.PlayerId,
+                    PlayerId = PlayerId,
                 };
                 if (pl.LootId == playerLoot.LootId && pl.PlayerId == playerLoot.PlayerId)
                 {
