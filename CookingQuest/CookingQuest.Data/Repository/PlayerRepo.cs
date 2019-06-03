@@ -246,7 +246,24 @@ namespace CookingQuest.Data.Repository
             }
         }
 
-
+        public async Task<bool> AddPlayerLootArray(IEnumerable<LootModel> lootModel, int PlayerId)
+        {
+            foreach (var loot in lootModel)
+            {
+                try
+                {
+                    await AddPlayerLoot(loot, PlayerId);
+                   
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error(ex.ToString());
+                    return false;
+                }
+            }
+            return true;
+        }
+        
 
         public async Task<bool> AddPlayerEquipment(EquipmentModel equipmentModel, int PlayerId)
         {
